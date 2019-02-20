@@ -16,10 +16,18 @@ public class MainTestArrayStorage {
         r2.setUuid("uuid2");
         Resume r3 = new Resume();
         r3.setUuid("uuid3");
+        Resume updatableResume = new Resume();
+        updatableResume.setUuid("uuid2");
 
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
+
+        System.out.println("Check all resumes before update:");
+        printAll();
+        ARRAY_STORAGE.update(updatableResume);
+        System.out.println("Check all resumes after update:");
+        printAll();
 
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
@@ -40,5 +48,6 @@ public class MainTestArrayStorage {
         for (Resume r : ARRAY_STORAGE.getAll()) {
             System.out.println(r);
         }
+        System.out.println("\n");
     }
 }

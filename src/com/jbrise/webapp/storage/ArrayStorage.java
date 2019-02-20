@@ -19,12 +19,13 @@ public class ArrayStorage {
         size = 0;
     }
 
-    public void update(Resume resume) {
-        int resumeIdx = getIndex(resume.getUuid());
+    public void update(Resume r) {
+        int resumeIdx = getIndex(r.getUuid());
         if (resumeIdx >= 0) {
-            storage[resumeIdx] = resume;
+            delete(r.getUuid());
+            save(r);
         } else {
-            System.out.println("ERROR: storage does not contain the resume with this id: " + resume.getUuid());
+            System.out.println("ERROR: storage does not contain the resume with this id: " + r.getUuid());
         }
     }
 
@@ -58,7 +59,7 @@ public class ArrayStorage {
             storage[size - 1] = null;
             size--;
         } else {
-            System.out.println("ERRPR: storage does not contain resume on this id: " + uuid);
+            System.out.println("ERROR: storage does not contain resume on this id: " + uuid);
         }
     }
 
