@@ -9,8 +9,9 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
+    private static final int STORAGE_LIMIT = 10000;
     private int size;
-    private Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
