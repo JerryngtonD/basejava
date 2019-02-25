@@ -9,29 +9,21 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class SortedArrayStorage extends AbstractArrayStorage {
-    @Override
-    public void clear() {
 
+    @Override
+    protected void insertResume(int idx, Resume r) {
+        // this is a new value to insert (not a duplicate).
+        int insertIdx = -idx - 1;
+        System.arraycopy(storage, insertIdx, storage, insertIdx + 1, size - insertIdx);
+        storage[insertIdx] = r;
     }
 
     @Override
-    public void update(Resume r) {
-
-    }
-
-    @Override
-    public void save(Resume r) {
-
-    }
-
-    @Override
-    public void delete(String uuid) {
-
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return new Resume[0];
+    protected void shiftOnDeletedResume(int deletedResumeIdx) {
+        int shiftingResumesCount = size - deletedResumeIdx - 1;
+        if (shiftingResumesCount > 0) {
+            System.arraycopy(storage, deletedResumeIdx + 1, storage, deletedResumeIdx, shiftingResumesCount);
+        }
     }
 
     @Override
