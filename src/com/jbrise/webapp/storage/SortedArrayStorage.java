@@ -11,11 +11,11 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void insertResume(int idx, Resume r) {
+    protected void insertResume(int idx, Resume newResume) {
         // this is a new value to insert (not a duplicate).
         int insertIdx = -idx - 1;
         System.arraycopy(storage, insertIdx, storage, insertIdx + 1, size - insertIdx);
-        storage[insertIdx] = r;
+        storage[insertIdx] = newResume;
     }
 
     @Override

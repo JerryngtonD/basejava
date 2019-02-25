@@ -18,13 +18,12 @@ public abstract class AbstractArrayStorage implements Storage {
         size = 0;
     }
 
-    public void update(Resume r) {
-        int resumeIdx = getIndex(r.getUuid());
+    public void update(Resume resume) {
+        int resumeIdx = getIndex(resume.getUuid());
         if (resumeIdx >= 0) {
-            delete(r.getUuid());
-            save(r);
+            storage[resumeIdx] = resume;
         } else {
-            System.out.println("ERROR: storage does not contain the resume with this id: " + r.getUuid());
+            System.out.println("ERROR: storage does not contain the resume with this id: " + resume.getUuid());
         }
     }
 
@@ -49,11 +48,11 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public void save(Resume r) {
+    public void save(Resume resume) {
         if (size < storage.length) {
-            int idx = getIndex(r.getUuid());
+            int idx = getIndex(resume.getUuid());
             if (idx < 0) {
-                insertResume(idx, r);
+                insertResume(idx, resume);
                 size++;
             } else {
                 System.out.println("ERROR: storage contains this resume already");
@@ -74,7 +73,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    protected abstract void insertResume(int idx, Resume r);
+    protected abstract void insertResume(int idx, Resume resume);
 
     protected abstract void shiftOnDeletedResume(int deletedResumeIdx);
 

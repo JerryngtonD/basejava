@@ -1,7 +1,6 @@
 package com.jbrise.webapp;
 
 import com.jbrise.webapp.model.Resume;
-import com.jbrise.webapp.storage.ArrayStorage;
 import com.jbrise.webapp.storage.SortedArrayStorage;
 import com.jbrise.webapp.storage.Storage;
 

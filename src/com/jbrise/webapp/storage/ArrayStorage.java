@@ -2,8 +2,6 @@ package com.jbrise.webapp.storage;
 
 import com.jbrise.webapp.model.Resume;
 
-import java.util.Arrays;
-
 
 /**
  * Array based storage for Resumes
@@ -20,6 +18,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         storage[deletedResumeIdx] = storage[size - 1];
     }
 
+    @Override
     protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
