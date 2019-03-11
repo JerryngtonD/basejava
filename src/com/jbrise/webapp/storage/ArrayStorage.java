@@ -2,7 +2,6 @@ package com.jbrise.webapp.storage;
 
 import com.jbrise.webapp.model.Resume;
 
-
 /**
  * Array based storage for Resumes
  */

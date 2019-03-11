@@ -1,5 +1,8 @@
 package com.jbrise.webapp.storage;
 
+import com.jbrise.webapp.exception.ExistStorageException;
+import com.jbrise.webapp.exception.NotExistStorageException;
+import com.jbrise.webapp.exception.StorageException;
 import com.jbrise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -23,7 +26,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (resumeIdx >= 0) {
             storage[resumeIdx] = resume;
         } else {
-            System.out.println("ERROR: storage does not contain the resume with this id: " + resume.getUuid());
+            throw new NotExistStorageException(resume.getUuid());
         }
     }
 
@@ -43,8 +46,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (resumeIdx >= 0) {
             return storage[resumeIdx];
         } else {
-            System.out.println("ERROR: storage does not contain resume on this id: " + uuid);
-            return null;
+            throw new NotExistStorageException(uuid);
         }
     }
 
@@ -55,10 +57,10 @@ public abstract class AbstractArrayStorage implements Storage {
                 insertResume(idx, resume);
                 size++;
             } else {
-                System.out.println("ERROR: storage contains this resume already");
+                throw new ExistStorageException(resume.getUuid());
             }
         } else {
-            System.out.println("ERROR: storage is limited");
+            throw new StorageException("Storage overflow", resume.getUuid());
         }
     }
 
@@ -69,7 +71,7 @@ public abstract class AbstractArrayStorage implements Storage {
             storage[size - 1] = null;
             size--;
         } else {
-            System.out.println("ERROR: storage does not contain resume on this id: " + uuid);
+            throw new NotExistStorageException(uuid);
         }
     }
 
