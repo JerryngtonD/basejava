@@ -11,6 +11,27 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 abstract class AbstractArrayStorageTest {
+    /**
+     * Util part
+     */
+    static class MyAssertions {
+        public static void assertDoesNotThrow(FailingRunnable action) {
+            try {
+                action.run();
+            } catch (Exception ex) {
+                throw new Error("expected action not to throw, but it did!", ex);
+            }
+        }
+    }
+
+    @FunctionalInterface
+    interface FailingRunnable {
+        void run() throws Exception;
+    }
+
+    /**
+     * Mock-data part
+     */
     private Storage storage;
 
     private static final String UUID_1 = "uuid1";
@@ -58,7 +79,7 @@ abstract class AbstractArrayStorageTest {
     void getAll() {
         Resume[] resumeList = storage.getAll();
         assertEquals(3, resumeList.length);
-        assertDoesNotThrow(() -> Stream.of(RESUME_1, RESUME_2, RESUME_3).map(resume -> storage.get(resume.getUuid())));
+        MyAssertions.assertDoesNotThrow(() -> Stream.of(RESUME_1, RESUME_2, RESUME_3).map(resume -> storage.get(resume.getUuid())));
     }
 
     @Test
@@ -68,7 +89,7 @@ abstract class AbstractArrayStorageTest {
 
     @Test
     void get() {
-        assertDoesNotThrow(()-> storage.get(UUID_1));
+        MyAssertions.assertDoesNotThrow(() -> storage.get(UUID_1));
     }
 
     @Test
