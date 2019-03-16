@@ -1,8 +1,8 @@
 package com.jbrise.webapp.storage;
 
 import com.jbrise.webapp.exception.NotExistStorageException;
+import com.jbrise.webapp.exception.StorageException;
 import com.jbrise.webapp.model.Resume;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -70,8 +70,9 @@ abstract class AbstractArrayStorageTest {
 
     @Test
     void update() {
-        Resume newResume = new Resume(UUID_1);
+        Resume newResume = new Resume(UUID_1, "Ivan Petrov");
         assertEquals(newResume.getUuid(), storage.get(UUID_1).getUuid());
+        assertNotEquals(newResume.getFullName(), storage.get(UUID_1).getFullName());
         storage.update(newResume);
     }
 
@@ -99,6 +100,21 @@ abstract class AbstractArrayStorageTest {
         assertEquals(RESUME_4, storage.get(UUID_4));
     }
 
+    @Test()
+    public void saveOverflow() throws Exception {
+        Resume overflowInsertedResume = new Resume();
+        assertThrows(StorageException.class, () -> {
+            try {
+                for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
+                    storage.save(new Resume());
+                }
+            } catch (StorageException e) {
+                fail("The storage will be full and there should not be an overflow, but something went wrong: " + e );
+            }
+            storage.save(overflowInsertedResume);
+        });
+    }
+
     @Test
     void delete() {
         storage.delete(UUID_3);
@@ -108,7 +124,7 @@ abstract class AbstractArrayStorageTest {
     }
 
     @Test()
-    public void getNotExist() {
+    public void getIfNotExist() {
         assertThrows(NotExistStorageException.class,
                 () -> storage.get("dummy"));
     }
