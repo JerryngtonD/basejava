@@ -13,27 +13,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 public abstract class AbstractArrayStorageTest {
-    /**
-     * Util part
-     */
-    static class MyAssertions {
-        public static void assertDoesNotThrow(FailingRunnable action) {
-            try {
-                action.run();
-            } catch (Exception ex) {
-                throw new Error("expected action not to throw, but it did!", ex);
-            }
-        }
-    }
-
-    @FunctionalInterface
-    interface FailingRunnable {
-        void run() throws Exception;
-    }
-
-    /**
-     * Mock-data part
-     */
     private Storage storage;
 
     private static final String UUID_1 = "uuid1";
@@ -81,20 +60,20 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test
+    public void get() {
+        assertEquals(RESUME_1, storage.get(RESUME_1.getUuid()));
+    }
+
+    @Test(expected = NotExistStorageException.class)
+    public void getIfNotExist() {
+        storage.get("dummy");
+    }
+
+    @Test
     public void getAll() {
         Resume[] resumeList = storage.getAll();
         assertEquals(3, resumeList.length);
-        assertArrayEquals(storage.getAll(), new Resume[]{RESUME_1, RESUME_2, RESUME_3});
-    }
-
-    @Test
-    public void size() {
-        checkSize(3);
-    }
-
-    @Test
-    public void get() {
-        MyAssertions.assertDoesNotThrow(() -> storage.get(UUID_1));
+        assertArrayEquals(resumeList, new Resume[]{RESUME_1, RESUME_2, RESUME_3});
     }
 
     @Test
@@ -136,9 +115,9 @@ public abstract class AbstractArrayStorageTest {
         storage.delete("dummy");
     }
 
-    @Test(expected = NotExistStorageException.class)
-    public void getIfNotExist() {
-        storage.get("dummy");
+    @Test
+    public void size() {
+        checkSize(3);
     }
 
     private void checkSize(int size) {
