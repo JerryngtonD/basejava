@@ -6,6 +6,8 @@ import com.jbrise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
@@ -28,7 +30,7 @@ public abstract class AbstractStorageTest {
     }
 
     protected Storage getStorage() {
-        return  storage;
+        return storage;
     }
 
     @Before
@@ -73,7 +75,7 @@ public abstract class AbstractStorageTest {
     public void getAll() {
         Resume[] resumeList = storage.getAll();
         assertEquals(3, resumeList.length);
-        assertArrayEquals(resumeList, new Resume[]{RESUME_1, RESUME_2, RESUME_3});
+        Arrays.asList(resumeList).containsAll(Arrays.asList(new Resume[]{RESUME_1, RESUME_2, RESUME_3}));
     }
 
     @Test
