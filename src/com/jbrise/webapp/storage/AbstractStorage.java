@@ -6,6 +6,8 @@ import com.jbrise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
+    protected abstract Object getSearchKey(String uuid);
+
     protected abstract void doUpdate(Object searchKey, Resume resume);
 
     protected abstract void doSave(Object searchKey, Resume resume);
@@ -13,8 +15,6 @@ public abstract class AbstractStorage implements Storage {
     protected abstract void doDelete(Object searchKey);
 
     protected abstract Resume doGet(Object searchKey);
-
-    protected abstract int getSearchKey(String uuid);
 
     protected abstract boolean isExistSearchKey(Object searchKey);
 

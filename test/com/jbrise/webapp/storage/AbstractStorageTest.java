@@ -2,17 +2,13 @@ package com.jbrise.webapp.storage;
 
 import com.jbrise.webapp.exception.ExistStorageException;
 import com.jbrise.webapp.exception.NotExistStorageException;
-import com.jbrise.webapp.exception.StorageException;
 import com.jbrise.webapp.model.Resume;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
-public abstract class AbstractArrayStorageTest {
+public abstract class AbstractStorageTest {
     private Storage storage;
 
     private static final String UUID_1 = "uuid1";
@@ -27,8 +23,12 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID_4 = "uuid4";
     private static final Resume RESUME_4 = new Resume(UUID_4);
 
-    protected AbstractArrayStorageTest(Storage storage) {
+    protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
+    }
+
+    protected Storage getStorage() {
+        return  storage;
     }
 
     @Before
@@ -87,20 +87,6 @@ public abstract class AbstractArrayStorageTest {
     public void saveExist() {
         Resume newResumeWithSameUuid = new Resume(UUID_1);
         storage.save(newResumeWithSameUuid);
-    }
-
-    @Test(expected = StorageException.class)
-    public void saveOverflow() throws Exception {
-        storage.clear();
-        Resume overflowInsertedResume = new Resume();
-        try {
-            for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
-                storage.save(new Resume());
-            }
-        } catch (StorageException e) {
-            Assert.fail("The storage will be full and there should not be an overflow, but something went wrong: " + e);
-        }
-        storage.save(overflowInsertedResume);
     }
 
     @Test(expected = NotExistStorageException.class)
