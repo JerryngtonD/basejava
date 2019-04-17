@@ -11,7 +11,7 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
-    private Storage storage;
+    protected Storage storage;
 
     private static final String UUID_1 = "uuid1";
     private static final Resume RESUME_1 = new Resume(UUID_1);
