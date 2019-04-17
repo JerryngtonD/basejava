@@ -1,7 +1,9 @@
 package com.jbrise.webapp.model;
 
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.UUID;
+
 
 /**
  * Initial resume class
@@ -10,6 +12,8 @@ public class Resume implements Comparable<Resume> {
 
     private final String uuid;
 
+    private String fullName;
+
 
     public Resume() {
         this(UUID.randomUUID().toString());
@@ -17,10 +21,20 @@ public class Resume implements Comparable<Resume> {
 
     public Resume(String uuid) {
         this.uuid = uuid;
+        this.fullName = "incognito";
+    }
+
+    public Resume(String uuid, String fullName) {
+        this.uuid = uuid;
+        this.fullName = fullName;
     }
 
     public String getUuid() {
         return uuid;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     @Override
@@ -35,16 +49,16 @@ public class Resume implements Comparable<Resume> {
 
         Resume resume = (Resume) o;
 
-        return uuid.equals(resume.getUuid());
+        return uuid.equals(resume.getUuid()) && fullName.equals(resume.getFullName());
     }
 
     @Override
     public int hashCode() {
-        return uuid.hashCode();
+        return Objects.hash(uuid, fullName);
     }
 
     @Override
     public int compareTo(Resume o) {
-        return Comparator.comparing(Resume::getUuid).compare(this, o);
+        return Comparator.comparing(Resume::getUuid).thenComparing(Resume::getFullName).compare(this, o);
     }
 }
