@@ -48,7 +48,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected List<Resume> doGetStorageItems() {
-        return new ArrayList<Resume>(map.values());
+        return new ArrayList<>(map.values());
     }
 
     @Override

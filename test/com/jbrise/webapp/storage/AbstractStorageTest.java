@@ -9,16 +9,19 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
 
     private static final String UUID_1 = "uuid1";
-    private static final Resume RESUME_1 = new Resume(UUID_1);
+    private static final String FULLNAME_1 = "Alexander Alexandrov";
+    private static final Resume RESUME_1 = new Resume(UUID_1, FULLNAME_1);
 
     private static final String UUID_2 = "uuid2";
-    private static final Resume RESUME_2 = new Resume(UUID_2);
+    private static final String FULLNAME_2 = "Boris Borisov";
+    private static final Resume RESUME_2 = new Resume(UUID_2, FULLNAME_2 );
 
     private static final String UUID_3 = "uuid3";
     private static final Resume RESUME_3 = new Resume(UUID_3);
@@ -37,9 +40,9 @@ public abstract class AbstractStorageTest {
     @Before
     public void setUp() {
         storage.clear();
-        storage.save(RESUME_1);
-        storage.save(RESUME_2);
         storage.save(RESUME_3);
+        storage.save(RESUME_2);
+        storage.save(RESUME_1);
     }
 
     @Test
@@ -50,7 +53,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = new Resume(UUID_1);
+        Resume newResume = new Resume(UUID_1, FULLNAME_1);
         storage.update(newResume);
         assertEquals(newResume.getUuid(), storage.get(UUID_1).getUuid());
         assertSame(newResume, storage.get(UUID_1));
@@ -73,10 +76,12 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() {
+    public void getAllSorted() {
         List<Resume> resumeList = storage.getAllSorted();
         assertEquals(3, resumeList.size());
-        resumeList.containsAll(Arrays.asList(new Resume[]{RESUME_1, RESUME_2, RESUME_3}));
+
+        //check order of elements on output
+        assertEquals(resumeList, Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
     }
 
     @Test
