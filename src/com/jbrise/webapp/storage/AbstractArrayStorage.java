@@ -3,7 +3,6 @@ package com.jbrise.webapp.storage;
 import com.jbrise.webapp.exception.StorageException;
 import com.jbrise.webapp.model.Resume;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,7 +51,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     public List<Resume> doGetStorageItems() {
-        return new ArrayList<>(Arrays.asList(Arrays.copyOf(storage, size)));
+        return Arrays.asList(Arrays.copyOf(storage, size));
     }
 
     @Override
