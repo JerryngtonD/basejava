@@ -23,6 +23,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract Integer getSearchKey(String uuid);
 
+    @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
@@ -30,8 +31,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     @Override
-    protected void doUpdate(Object index, Resume r) {
-        storage[(Integer) index] = r;
+    protected void doUpdate(Object index, Resume resume) {
+        storage[(Integer) index] = resume;
     }
 
     @Override
@@ -54,24 +55,19 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return new ArrayList<>(Arrays.asList(Arrays.copyOf(storage, size)));
     }
 
+    @Override
     public void doDelete(Object index) {
         shiftOnDeletedResume((Integer) index);
         storage[size - 1] = null;
         size--;
     }
 
+    @Override
     public Resume doGet(Object index) {
         return storage[(Integer) index];
     }
 
-
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
-    }
-
+    @Override
     public int size() {
         return size;
     }

@@ -15,19 +15,19 @@ import static org.junit.Assert.assertSame;
 public abstract class AbstractStorageTest {
     protected Storage storage;
 
+    private static final String DEFAULT_FULLNAME = "incognito";
+
     private static final String UUID_1 = "uuid1";
-    private static final String FULLNAME_1 = "Alexander Alexandrov";
-    private static final Resume RESUME_1 = new Resume(UUID_1, FULLNAME_1);
+    private static final Resume RESUME_1 = new Resume(UUID_1, "Alexander Alexandrov");
 
     private static final String UUID_2 = "uuid2";
-    private static final String FULLNAME_2 = "Boris Borisov";
-    private static final Resume RESUME_2 = new Resume(UUID_2, FULLNAME_2 );
+    private static final Resume RESUME_2 = new Resume(UUID_2, "Boris Borisov");
 
     private static final String UUID_3 = "uuid3";
-    private static final Resume RESUME_3 = new Resume(UUID_3);
+    private static final Resume RESUME_3 = new Resume(UUID_3, DEFAULT_FULLNAME);
 
     private static final String UUID_4 = "uuid4";
-    private static final Resume RESUME_4 = new Resume(UUID_4);
+    private static final Resume RESUME_4 = new Resume(UUID_4, DEFAULT_FULLNAME);
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -53,7 +53,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = new Resume(UUID_1, FULLNAME_1);
+        Resume newResume = new Resume(UUID_1, "Igor Alehin");
         storage.update(newResume);
         assertEquals(newResume.getUuid(), storage.get(UUID_1).getUuid());
         assertSame(newResume, storage.get(UUID_1));
@@ -67,7 +67,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() {
-        assertEquals(RESUME_1, storage.get(RESUME_1.getUuid()));
+        assertEquals(RESUME_1, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -93,8 +93,7 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() {
-        Resume newResumeWithSameUuid = new Resume(UUID_1);
-        storage.save(newResumeWithSameUuid);
+        storage.save(RESUME_1);
     }
 
     @Test(expected = NotExistStorageException.class)

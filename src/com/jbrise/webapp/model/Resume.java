@@ -10,23 +10,23 @@ import java.util.UUID;
  */
 public class Resume implements Comparable<Resume> {
 
-    private final String uuid;
+    private String uuid;
 
     private String fullName;
 
 
     public Resume() {
-        this(UUID.randomUUID().toString());
+        this("incognito");
     }
 
-    public Resume(String uuid) {
-        this.uuid = uuid;
-        this.fullName = "incognito";
+    public Resume(String fullName) {
+        this.fullName = fullName;
+        this.uuid = UUID.randomUUID().toString();
     }
 
     public Resume(String uuid, String fullName) {
+        this(fullName);
         this.uuid = uuid;
-        this.fullName = fullName;
     }
 
     public String getUuid() {

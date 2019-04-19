@@ -7,8 +7,8 @@ import com.jbrise.webapp.model.Resume;
  */
 public class ArrayStorage extends AbstractArrayStorage {
     @Override
-    protected void insertResume(int idx, Resume r) {
-        storage[size] = r;
+    protected void insertResume(int idx, Resume resume) {
+        storage[size] = resume;
     }
 
     @Override
