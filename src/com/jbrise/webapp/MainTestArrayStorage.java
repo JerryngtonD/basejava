@@ -13,10 +13,10 @@ public class MainTestArrayStorage {
     private static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
-        final Resume resume_1 = new Resume();
-        final Resume resume_2 = new Resume();
-        final Resume resume_3 = new Resume();
-        Resume updatableResume = new Resume(resume_3.getUuid());
+        final Resume resume_1 = new Resume("Some_1");
+        final Resume resume_2 = new Resume("Some_2");
+        final Resume resume_3 = new Resume("Some_3");
+        Resume updatableResume = new Resume(resume_3.getUuid(), "updated name");
 
         ARRAY_STORAGE.save(resume_1);
         ARRAY_STORAGE.save(resume_2);

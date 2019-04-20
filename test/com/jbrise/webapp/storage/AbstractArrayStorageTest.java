@@ -13,10 +13,10 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
     @Test(expected = StorageException.class)
     public void saveOverflow() throws Exception {
         getStorage().clear();
-        Resume overflowInsertedResume = new Resume();
+        Resume overflowInsertedResume = new Resume("OverflowedResume");
         try {
             for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
-                getStorage().save(new Resume());
+                getStorage().save(new Resume("Some__" + i));
             }
         } catch (StorageException e) {
             Assert.fail("The storage will be full and there should not be an overflow, but something went wrong: " + e);
