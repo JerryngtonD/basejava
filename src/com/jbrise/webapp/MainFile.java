@@ -30,21 +30,10 @@ public class MainFile {
             }
         }
 
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(filePath);
+        try(FileInputStream fileInputStream = new FileInputStream(filePath)) {
             System.out.println(fileInputStream.read());
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-        finally {
-            if (fileInputStream != null) {
-                try {
-                    fileInputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
 
     }
